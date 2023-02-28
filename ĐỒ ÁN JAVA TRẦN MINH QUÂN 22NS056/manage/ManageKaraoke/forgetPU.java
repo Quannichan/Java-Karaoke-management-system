@@ -231,68 +231,62 @@ public class forgetPU extends conmysql implements ActionListener {
 
         if (e.getSource() == NextButton) {
             if (EmailTextField.getText().length() != 0) {
-                if (EmailTextField.getText().length() >= 7) {
-                    CheckEmail check = new CheckEmail();
-                    if (check.CheckEmail(EmailTextField.getText()) == true) {
-                        try {
-                            Connection connection = DriverManager.getConnection(DB_URL, USER_NAME,
-                                    PASSWORD);
-                            Statement stmt = connection.createStatement();
-                            ResultSet rs = stmt
-                                    .executeQuery(
-                                            "Select UserName,Email from Karaoke.UserList");
-                            while (rs.next()) {
-                                UN.add(rs.getString(1));
-                                Email.add(rs.getString(2));
-                            }
-                            connection.close();
-                            if (Email.contains(EmailTextField.getText())) {
-                                String choose[] = { "User Name", "Password" };
-                                choosen = JOptionPane.showOptionDialog(null,
-                                        "What do you want to find ?",
-                                        "find information", JOptionPane.OK_CANCEL_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE, question, choose, 0);
-                                if (choosen == 0) {
-                                    sendmail sendmail = new sendmail(EmailTextField.getText());
-                                    if (sendmail.get == true) {
-                                        this.code = sendmail.n;
-                                        this.LableEmail.setVisible(false);
-                                        this.PasscodeLabel.setVisible(true);
-
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Verificate code cannot be sent!",
-                                                "Warning",
-                                                JOptionPane.WARNING_MESSAGE);
-                                    }
-                                } else {
-                                    sendmail sendmail = new sendmail(EmailTextField.getText());
-                                    if (sendmail.get == true) {
-                                        this.code = sendmail.n;
-                                        this.LableEmail.setVisible(false);
-                                        this.PasscodeLabel.setVisible(true);
-
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Verificate code cannot be sent!",
-                                                "Warning",
-                                                JOptionPane.WARNING_MESSAGE);
-                                    }
-                                }
-
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Your email not exist, please create new account!",
-                                        "Warning",
-                                        JOptionPane.WARNING_MESSAGE);
-                            }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
+                CheckEmail check = new CheckEmail();
+                if (check.CheckEmail(EmailTextField.getText()) == true) {
+                    try {
+                        Connection connection = DriverManager.getConnection(DB_URL, USER_NAME,
+                                PASSWORD);
+                        Statement stmt = connection.createStatement();
+                        ResultSet rs = stmt
+                                .executeQuery(
+                                        "Select UserName,Email from Karaoke.UserList");
+                        while (rs.next()) {
+                            UN.add(rs.getString(1));
+                            Email.add(rs.getString(2));
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Invalid email !",
-                                "Warning",
-                                JOptionPane.WARNING_MESSAGE);
+                        connection.close();
+                        if (Email.contains(EmailTextField.getText())) {
+                            String choose[] = { "User Name", "Password" };
+                            choosen = JOptionPane.showOptionDialog(null,
+                                    "What do you want to find ?",
+                                    "find information", JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE, question, choose, 0);
+                            if (choosen == 0) {
+                                sendmail sendmail = new sendmail(EmailTextField.getText());
+                                if (sendmail.get == true) {
+                                    this.code = sendmail.n;
+                                    this.LableEmail.setVisible(false);
+                                    this.PasscodeLabel.setVisible(true);
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Verificate code cannot be sent!",
+                                            "Warning",
+                                            JOptionPane.WARNING_MESSAGE);
+                                }
+                            } else {
+                                sendmail sendmail = new sendmail(EmailTextField.getText());
+                                if (sendmail.get == true) {
+                                    this.code = sendmail.n;
+                                    this.LableEmail.setVisible(false);
+                                    this.PasscodeLabel.setVisible(true);
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Verificate code cannot be sent!",
+                                            "Warning",
+                                            JOptionPane.WARNING_MESSAGE);
+                                }
+                            }
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Your email not exist, please create new account!",
+                                    "Warning",
+                                    JOptionPane.WARNING_MESSAGE);
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Email must be over than 7 character !",
+                    JOptionPane.showMessageDialog(null, "Invalid email !",
                             "Warning",
                             JOptionPane.WARNING_MESSAGE);
                 }

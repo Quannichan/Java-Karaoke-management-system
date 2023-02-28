@@ -32,24 +32,24 @@ public class Signinframe extends conmysql implements ActionListener {
     JPasswordField PasswordTextField;
     JButton NextButton, ForgetPUButton, NewAccountButton;
     CheckEmail check = new CheckEmail();
-    Border BlackBorder = BorderFactory.createLineBorder(Color.BLACK, 3);
+    Border BlackBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
     Border WhiteBorder = BorderFactory.createLineBorder(Color.WHITE, 3);
     ImageIcon Image = new ImageIcon("micro.jpg");
     ImageIcon icon = new ImageIcon("icon.jpg");
     JCheckBox show;
     String Email, UserName;
-    String PASS, USERNAME,EMAIL;
+    String PASS, USERNAME, EMAIL;
     Font BigFont = new Font("Serif", Font.BOLD, 50);
     Font MediumFont = new Font("Serif", Font.BOLD, 18);
     Font SmallFont = new Font("Serif", Font.BOLD, 16);
     SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
     Date date = new Date();
-    
+
     public Signinframe() {
         this.SignInText = new JTextArea();
         this.SignInText.setText("Sign in");
         this.SignInText.setBounds(380, 40, 149, 65);
-        this.SignInText.setFont(this.BigFont); 
+        this.SignInText.setFont(this.BigFont);
         this.SignInText.setEditable(false);
 
         this.UserNameText = new JTextArea();
@@ -166,109 +166,114 @@ public class Signinframe extends conmysql implements ActionListener {
 
         if (e.getSource() == this.NextButton) {
             if (this.UserNameTextField.getText().length() != 0) {
-                if (this.UserNameTextField.getText().length() >= 7) {
-                    if (this.EmailTextField.getText().length() != 0) {
-                        if (this.EmailTextField.getText().length() >= 10) {
-                            if (this.check.CheckEmail(this.EmailTextField.getText()) == true) {
-                                if (this.PasswordTextField.getText().length() != 0) {
-                                    if (this.PasswordTextField.getText().length() >= 8) {
-                                        try {
-                                            Connection connection = DriverManager.getConnection(DB_URL, USER_NAME,
-                                                    PASSWORD);
-                                            Statement stmt = connection.createStatement();
-                                            ResultSet rs = stmt
-                                                    .executeQuery(
-                                                            "Select UserName, Email, cast(aes_decrypt(pass,'key123') as char) as showpass from Karaoke.UserList");
-                                            ArrayList<String> UN = new ArrayList<String>();
-                                            ArrayList<String> Email = new ArrayList<String>();
-                                            ArrayList<String> pass = new ArrayList<String>();
-                                            while (rs.next()) {
-                                                UN.add(rs.getString(1));
-                                                Email.add(rs.getString(2));
-                                                pass.add(rs.getString(3));
-                                            }
-                                            connection.close();
-                                            if (UN.contains(this.UserNameTextField.getText()) == true) {
-                                                if (Email.contains(this.EmailTextField.getText()) == true) {
-                                                    if (pass.contains(this.PasswordTextField.getText()) == true) {
-                                                        try{
-                                                            Connection connection2 = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
-                                                            Statement stmt2 = connection2.createStatement();
-                                                            ResultSet rs2 = stmt2.executeQuery("Select UserName, Email, cast(aes_decrypt(pass,'key123') as char) as showpass from Karaoke.UserList where Email = '"+this.EmailTextField.getText()+"'");
-                                                            while (rs2.next()) {
-                                                                this.USERNAME = rs2.getString(1);
-                                                                this.EMAIL = rs2.getString(2);
-                                                                this.PASS = rs2.getString(3);
-                                                            }
-                                                            if(this.USERNAME.equals(this.UserNameTextField.getText()) == true){
-                                                                if(this.EMAIL.equalsIgnoreCase(this.EmailTextField.getText()) == true){
-                                                                    if(this.PASS.equals(this.PasswordTextField.getText()) == true){
+                if (this.EmailTextField.getText().length() != 0) {
+                    if (this.check.CheckEmail(this.EmailTextField.getText()) == true) {
+                        if (this.PasswordTextField.getText().length() != 0) {
+                            try {
+                                Connection connection = DriverManager.getConnection(DB_URL, USER_NAME,
+                                        PASSWORD);
+                                Statement stmt = connection.createStatement();
+                                ResultSet rs = stmt
+                                        .executeQuery(
+                                                "Select UserName, Email, cast(aes_decrypt(pass,'key123') as char) as showpass from Karaoke.UserList");
+                                ArrayList<String> UN = new ArrayList<String>();
+                                ArrayList<String> Email = new ArrayList<String>();
+                                ArrayList<String> pass = new ArrayList<String>();
+                                while (rs.next()) {
+                                    UN.add(rs.getString(1));
+                                    Email.add(rs.getString(2));
+                                    pass.add(rs.getString(3));
+                                }
+                                connection.close();
+                                if (UN.contains(this.UserNameTextField.getText()) == true) {
+                                    if (Email.contains(this.EmailTextField.getText()) == true) {
+                                        if (pass.contains(this.PasswordTextField.getText()) == true) {
+                                            try {
+                                                Connection connection2 = DriverManager.getConnection(DB_URL,
+                                                        USER_NAME, PASSWORD);
+                                                Statement stmt2 = connection2.createStatement();
+                                                ResultSet rs2 = stmt2.executeQuery(
+                                                        "Select UserName, Email, cast(aes_decrypt(pass,'key123') as char) as showpass from Karaoke.UserList where Email = '"
+                                                                + this.EmailTextField.getText() + "'");
+                                                while (rs2.next()) {
+                                                    this.USERNAME = rs2.getString(1);
+                                                    this.EMAIL = rs2.getString(2);
+                                                    this.PASS = rs2.getString(3);
+                                                }
+                                                if (this.USERNAME
+                                                        .equals(this.UserNameTextField.getText()) == true) {
+                                                    if (this.EMAIL.equalsIgnoreCase(
+                                                            this.EmailTextField.getText()) == true) {
+                                                        if (this.PASS.equals(
+                                                                this.PasswordTextField.getText()) == true) {
                                                             try {
-                                                                Connection connection1 = DriverManager.getConnection(DB_URL, USER_NAME,
-                                                                        PASSWORD);
-                                                                Statement stmt12 = connection1.createStatement();
-                                                                stmt12.executeUpdate("insert into Karaoke.SigninHis values('"+this.UserNameTextField.getText()+"', '"+this.EmailTextField.getText()+"','"+this.formatter.format(this.date)+"')");
+                                                                Connection connection1 = DriverManager
+                                                                        .getConnection(DB_URL, USER_NAME,
+                                                                                PASSWORD);
+                                                                Statement stmt12 = connection1
+                                                                        .createStatement();
+                                                                stmt12.executeUpdate(
+                                                                        "insert into Karaoke.SigninHis values('"
+                                                                                + this.UserNameTextField.getText()
+                                                                                + "', '" + this.EmailTextField.getText()
+                                                                                + "','"
+                                                                                + this.formatter.format(this.date)
+                                                                                + "')");
                                                                 connection.close();
                                                             } catch (Exception ex) {
                                                                 ex.printStackTrace();
                                                             }
-                                                        new InAppFrame(this.UserNameTextField.getText(), this.EmailTextField.getText());
-                                                        this.SigninFrame.dispose();
-                                                                }else{
-                                                                    JOptionPane.showMessageDialog(null, "Wrong information !","Warning", JOptionPane.WARNING_MESSAGE);
-                                                                }
-                                                            }else{
-                                                                JOptionPane.showMessageDialog(null, "Wrong information !","Warning", JOptionPane.WARNING_MESSAGE);
-                                                            }
-                                                        }else{
-                                                            JOptionPane.showMessageDialog(null, "Wrong information !","Warning", JOptionPane.WARNING_MESSAGE);
+                                                            new InAppFrame(this.UserNameTextField.getText(),
+                                                                    this.EmailTextField.getText());
+                                                            this.SigninFrame.dispose();
+                                                        } else {
+                                                            JOptionPane.showMessageDialog(null,
+                                                                    "Wrong information !", "Warning",
+                                                                    JOptionPane.WARNING_MESSAGE);
                                                         }
-                                                    } catch (Exception ex) {
-                                                        ex.printStackTrace();
-                                                    }
                                                     } else {
-                                                        JOptionPane.showMessageDialog(null, "Wrong Password !",
-                                                                "Warning", JOptionPane.WARNING_MESSAGE);
+                                                        JOptionPane.showMessageDialog(null,
+                                                                "Wrong information !", "Warning",
+                                                                JOptionPane.WARNING_MESSAGE);
                                                     }
                                                 } else {
                                                     JOptionPane.showMessageDialog(null,
-                                                            "Wrong Email, if you don't have account, make a new !",
-                                                            "Warning",
+                                                            "Wrong information !", "Warning",
                                                             JOptionPane.WARNING_MESSAGE);
                                                 }
-                                            } else {
-                                                JOptionPane.showMessageDialog(null,
-                                                        "Wrong User name, if you don't have account, make a new !",
-                                                        "Warning",
-                                                        JOptionPane.WARNING_MESSAGE);
+                                            } catch (Exception ex) {
+                                                ex.printStackTrace();
                                             }
-                                        } catch (Exception ex) {
-                                            ex.printStackTrace();
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Wrong Password !",
+                                                    "Warning", JOptionPane.WARNING_MESSAGE);
                                         }
-
                                     } else {
-                                        JOptionPane.showMessageDialog(null, "Password must be over than 7 charater !",
-                                                "Warning !", JOptionPane.WARNING_MESSAGE);
+                                        JOptionPane.showMessageDialog(null,
+                                                "Wrong Email, if you don't have account, make a new !",
+                                                "Warning",
+                                                JOptionPane.WARNING_MESSAGE);
                                     }
-
                                 } else {
-                                    JOptionPane.showMessageDialog(null, "Password cannot be null !!!", "Warning !",
+                                    JOptionPane.showMessageDialog(null,
+                                            "Wrong User name, if you don't have account, make a new !",
+                                            "Warning",
                                             JOptionPane.WARNING_MESSAGE);
                                 }
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Email must contain '@' !", "Warning !",
-                                        JOptionPane.WARNING_MESSAGE);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
                             }
+
                         } else {
-                            JOptionPane.showMessageDialog(null, "Wrong type of email !", "Warning !",
+                            JOptionPane.showMessageDialog(null, "Password cannot be null !!!", "Warning !",
                                     JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Email cannot be null !", "Warning !",
+                        JOptionPane.showMessageDialog(null, "Invalid email!", "Warning !",
                                 JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "User name must be over than 7 charater !", "Warning !",
+                    JOptionPane.showMessageDialog(null, "Email cannot be null !", "Warning !",
                             JOptionPane.WARNING_MESSAGE);
                 }
             } else {

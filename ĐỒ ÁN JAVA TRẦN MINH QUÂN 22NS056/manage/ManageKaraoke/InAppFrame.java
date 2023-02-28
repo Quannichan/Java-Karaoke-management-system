@@ -3,7 +3,7 @@ package ManageKaraoke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-
+import java.awt.Image;
 import javax.swing.border.Border;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -20,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.awt.Toolkit;
 import javax.swing.*;
 
 public class InAppFrame extends conmysql implements ActionListener {
@@ -32,7 +33,7 @@ public class InAppFrame extends conmysql implements ActionListener {
     JButton ListButton, EditButton, HistoryButton, SettingButton, FilterButton, SearchButton, ApplyButton, DeleteButton,
             AddInfo, UpdateInfo, DeleteInfo, changepass, changeusername, deleteacc,
             signout, HistorySignin;
-    JLabel WelcomeLabel_List, FilterLabel_List;
+    JLabel WelcomeLabel_List, FilterLabel_List, SearchPanel_List, EditPanel_Edit, SettingPanel_Setting;
     JRadioButton SongName, SingerName;
     ButtonGroup FilterChoose;
     JTextField Search, AddSongName, AddSinger, UpdateSongName, IDtf_Update, IDtf_Delete, UpdateSinger, DeleteSongName,
@@ -42,8 +43,8 @@ public class InAppFrame extends conmysql implements ActionListener {
     JTextArea SearchText, AddSong, ID_Update, ID_Delete, UpdateSong, DeleteSong, AddSongNameTx, AddSingerTx,
             UpdateSongNameTx, UpdateSingerTx, DeleteSingerTx, DeleteSongTx, SearchUpdate1,
             DeleteSearch1, text_setting;
-    JPanel MenuPanel, SearchPanel_List, TablePanel_List, EditPanel_Edit, EditTablePanel_Edit, HistoryTabelPanel_History,
-            SettingPanel_Setting, history_setting, changeusername_setting, changepass_setting, deleteacc_setting;
+    JPanel MenuPanel, TablePanel_List, EditTablePanel_Edit, HistoryTabelPanel_History, history_setting,
+            changeusername_setting, changepass_setting, deleteacc_setting;
     JTextArea ChangeUsernameTA, changeUsernameTApass, changeUsernameCode, newUserName, ChangePASSTA, ChangePASSold,
             ChangePASS_Code, ChangePASSnew, ChangePassnew1, DelAccTA, InputCode_DelAccTA, DelAcc;
     JPasswordField changeUsernameTFpass, oldPASSTF, newPassTF, newPassTF1, InputPass_DelAcc;
@@ -67,6 +68,7 @@ public class InAppFrame extends conmysql implements ActionListener {
     String Song, Singer;
     int max = 0;
     int code = 0;
+    Image Welcome_1, Welcome_1_scale, EditImage_1, EditImage_scale;
 
     public InAppFrame(String username, String Email) {
         this.USN = username;
@@ -87,32 +89,35 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.DeleteSongTx = new JTextArea("Song Name");
         this.DeleteSongTx.setEditable(false);
         this.DeleteSongTx.setFocusable(false);
-        this.DeleteSongTx.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.DeleteSongTx.setForeground(Color.WHITE);
+        this.DeleteSongTx.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.DeleteSongTx.setFont(new Font("Serif", Font.BOLD, 20));
         this.DeleteSongTx.setBounds(150, 150, 97, 30);
-        this.DeleteSongTx.setBackground(Color.LIGHT_GRAY);
+        this.DeleteSongTx.setBackground(new Color(0, 0, 0, 0));
         this.DeleteSongTx.setVisible(false);
 
         this.DeleteSingerTx = new JTextArea("Singer Name");
         this.DeleteSingerTx.setEditable(false);
         this.DeleteSingerTx.setFocusable(false);
-        this.DeleteSingerTx.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.DeleteSingerTx.setForeground(Color.WHITE);
+        this.DeleteSingerTx.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.DeleteSingerTx.setFont(new Font("Serif", Font.BOLD, 20));
         this.DeleteSingerTx.setBounds(650, 150, 120, 30);
-        this.DeleteSingerTx.setBackground(Color.LIGHT_GRAY);
+        this.DeleteSingerTx.setBackground(new Color(0, 0, 0, 0));
         this.DeleteSingerTx.setVisible(false);
 
         this.DeleteSearch1 = new JTextArea("Type or select on table view");
         this.DeleteSearch1.setEditable(false);
         this.DeleteSearch1.setFocusable(false);
-        this.DeleteSearch1.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.DeleteSearch1.setForeground(Color.WHITE);
+        this.DeleteSearch1.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.DeleteSearch1.setFont(new Font("Serif", Font.BOLD, 20));
         this.DeleteSearch1.setBounds(535, 90, 300, 30);
-        this.DeleteSearch1.setBackground(Color.LIGHT_GRAY);
+        this.DeleteSearch1.setBackground(new Color(0, 0, 0, 0));
         this.DeleteSearch1.setVisible(false);
 
         this.DeleteInfo = new JButton("DELETE");
-        this.DeleteInfo.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        this.DeleteInfo.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.DeleteInfo.setOpaque(true);
         this.DeleteInfo.setFont(new Font("Serif", Font.BOLD, 20));
         this.DeleteInfo.setBounds(585, 200, 100, 30);
@@ -123,14 +128,15 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.SearchUpdate1 = new JTextArea("Type or select on table view");
         this.SearchUpdate1.setEditable(false);
         this.SearchUpdate1.setFocusable(false);
-        this.SearchUpdate1.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.SearchUpdate1.setForeground(Color.WHITE);
+        this.SearchUpdate1.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.SearchUpdate1.setFont(new Font("Serif", Font.BOLD, 20));
         this.SearchUpdate1.setBounds(535, 90, 300, 30);
-        this.SearchUpdate1.setBackground(Color.LIGHT_GRAY);
+        this.SearchUpdate1.setBackground(new Color(0, 0, 0, 0));
         this.SearchUpdate1.setVisible(false);
 
         this.UpdateInfo = new JButton("UPDATE");
-        this.UpdateInfo.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        this.UpdateInfo.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.UpdateInfo.setOpaque(true);
         this.UpdateInfo.setFont(new Font("Serif", Font.BOLD, 20));
         this.UpdateInfo.setBounds(585, 200, 100, 30);
@@ -153,23 +159,25 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.UpdateSongNameTx = new JTextArea("Song Name");
         this.UpdateSongNameTx.setEditable(false);
         this.UpdateSongNameTx.setFocusable(false);
-        this.UpdateSongNameTx.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.UpdateSongNameTx.setForeground(Color.WHITE);
+        this.UpdateSongNameTx.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.UpdateSongNameTx.setFont(new Font("Serif", Font.BOLD, 20));
         this.UpdateSongNameTx.setBounds(150, 150, 97, 30);
-        this.UpdateSongNameTx.setBackground(Color.LIGHT_GRAY);
+        this.UpdateSongNameTx.setBackground(new Color(0, 0, 0, 0));
         this.UpdateSongNameTx.setVisible(false);
 
         this.UpdateSingerTx = new JTextArea("Singer Name");
         this.UpdateSingerTx.setEditable(false);
         this.UpdateSingerTx.setFocusable(false);
-        this.UpdateSingerTx.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.UpdateSingerTx.setForeground(Color.WHITE);
+        this.UpdateSingerTx.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.UpdateSingerTx.setFont(new Font("Serif", Font.BOLD, 20));
         this.UpdateSingerTx.setBounds(650, 150, 120, 30);
-        this.UpdateSingerTx.setBackground(Color.LIGHT_GRAY);
+        this.UpdateSingerTx.setBackground(new Color(0, 0, 0, 0));
         this.UpdateSingerTx.setVisible(false);
 
         this.AddInfo = new JButton("ADD");
-        this.AddInfo.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        this.AddInfo.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.AddInfo.setOpaque(true);
         this.AddInfo.setFont(new Font("Serif", Font.BOLD, 20));
         this.AddInfo.setBounds(585, 180, 100, 30);
@@ -180,19 +188,21 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.AddSongNameTx = new JTextArea("Song Name");
         this.AddSongNameTx.setEditable(false);
         this.AddSongNameTx.setFocusable(false);
-        this.AddSongNameTx.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.AddSongNameTx.setForeground(Color.WHITE);
+        this.AddSongNameTx.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.AddSongNameTx.setFont(new Font("Serif", Font.BOLD, 20));
         this.AddSongNameTx.setBounds(150, 100, 97, 30);
-        this.AddSongNameTx.setBackground(Color.LIGHT_GRAY);
+        this.AddSongNameTx.setBackground(new Color(0, 0, 0, 0));
         this.AddSongNameTx.setVisible(true);
 
         this.AddSingerTx = new JTextArea("Singer Name");
         this.AddSingerTx.setEditable(false);
         this.AddSingerTx.setFocusable(false);
-        this.AddSingerTx.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.AddSingerTx.setForeground(Color.black);
+        this.AddSingerTx.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.AddSingerTx.setFont(new Font("Serif", Font.BOLD, 20));
         this.AddSingerTx.setBounds(650, 100, 120, 30);
-        this.AddSingerTx.setBackground(Color.LIGHT_GRAY);
+        this.AddSingerTx.setBackground(new Color(0, 0, 0, 0));
         this.AddSingerTx.setVisible(true);
 
         this.AddSongName = new JTextField();
@@ -209,16 +219,20 @@ public class InAppFrame extends conmysql implements ActionListener {
 
         this.AddSong = new JTextArea("Add Song");
         this.AddSong.setEditable(false);
+        this.AddSong.setForeground(Color.WHITE);
+        this.AddSong.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.AddSong.setFocusable(false);
-        this.AddSong.setBackground(Color.LIGHT_GRAY);
+        this.AddSong.setBackground(new Color(0, 0, 0, 0));
         this.AddSong.setBounds(530, 10, 215, 63);
         this.AddSong.setFont(new Font("Serif", Font.BOLD, 50));
         this.AddSong.setVisible(true);
 
         this.UpdateSong = new JTextArea("Update Song");
+        this.UpdateSong.setForeground(Color.WHITE);
+        this.UpdateSong.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.UpdateSong.setEditable(false);
         this.UpdateSong.setFocusable(false);
-        this.UpdateSong.setBackground(Color.LIGHT_GRAY);
+        this.UpdateSong.setBackground(new Color(0, 0, 0, 0));
         this.UpdateSong.setBounds(515, 10, 300, 63);
         this.UpdateSong.setFont(new Font("Serif", Font.BOLD, 50));
         this.UpdateSong.setVisible(false);
@@ -231,9 +245,10 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.IDtf_Update.setVisible(false);
 
         this.ID_Update = new JTextArea("ID");
-        this.ID_Update.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.ID_Update.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.ID_Update.setOpaque(true);
-        this.ID_Update.setBackground(Color.LIGHT_GRAY);
+        this.ID_Update.setForeground(Color.BLACK);
+        this.ID_Update.setBackground(new Color(0, 0, 0, 0));
         this.ID_Update.setFont(new Font("Serif", Font.BOLD, 20));
         this.ID_Update.setBounds(360, 200, 30, 30);
         this.ID_Update.setFocusable(false);
@@ -247,18 +262,21 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.IDtf_Delete.setVisible(false);
 
         this.ID_Delete = new JTextArea("Or just ID");
-        this.ID_Delete.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.ID_Delete.setForeground(Color.BLACK);
+        this.ID_Delete.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.ID_Delete.setOpaque(true);
-        this.ID_Delete.setBackground(Color.LIGHT_GRAY);
+        this.ID_Delete.setBackground(new Color(0, 0, 0, 0));
         this.ID_Delete.setFont(new Font("Serif", Font.BOLD, 20));
-        this.ID_Delete.setBounds(280, 200, 100, 30);
+        this.ID_Delete.setBounds(300, 200, 100, 30);
         this.ID_Delete.setFocusable(false);
         this.ID_Delete.setVisible(false);
 
         this.DeleteSong = new JTextArea("Delete Song");
+        this.DeleteSong.setForeground(Color.WHITE);
         this.DeleteSong.setEditable(false);
+        this.DeleteSong.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0)));
         this.DeleteSong.setFocusable(false);
-        this.DeleteSong.setBackground(Color.LIGHT_GRAY);
+        this.DeleteSong.setBackground(new Color(0, 0, 0, 0));
         this.DeleteSong.setBounds(530, 10, 250, 63);
         this.DeleteSong.setFont(new Font("Serif", Font.BOLD, 50));
         this.DeleteSong.setVisible(false);
@@ -286,7 +304,7 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.ListTable.getTableHeader().setBackground(Color.PINK);
         this.ListTable.setFont(new Font("Serif", Font.BOLD, 16));
         this.ListTable.setShowHorizontalLines(true);
-        this.ListTable.setGridColor(Color.orange);
+        this.ListTable.setGridColor(Color.pink);
         this.ListTable.setFocusable(false);
         this.ListTable.setDefaultEditor(Object.class, null);
         this.ScrollListTable.setBounds(0, 0, 780, 635);
@@ -364,10 +382,11 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.MenuPanel.setLayout(new GridLayout());
 
         this.SearchText = new JTextArea("Search, find song");
-        this.SearchText.setBackground(Color.LIGHT_GRAY);
+        this.SearchText.setBackground(new Color(0, 0, 0, 0));
+        this.SearchText.setForeground(Color.WHITE);
         this.SearchText.setFont(new Font("Serif", Font.BOLD, 40));
         this.SearchText.setOpaque(true);
-        this.SearchText.setBounds(110, 100, 300, 55);
+        this.SearchText.setBounds(125, 100, 300, 55);
         this.SearchText.setEditable(false);
         this.SearchText.setFocusable(false);
 
@@ -393,7 +412,7 @@ public class InAppFrame extends conmysql implements ActionListener {
 
         this.FilterButton = new JButton();
         this.FilterButton.setIcon(this.Filter);
-        this.FilterButton.setBounds(70, 160, 30, 30);
+        this.FilterButton.setBounds(90, 160, 30, 30);
         this.FilterButton.setFocusable(false);
         this.FilterButton.setBackground(Color.WHITE);
         this.FilterButton.setOpaque(true);
@@ -415,7 +434,7 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.DeleteButton.setEnabled(false);
 
         this.Search = new JTextField();
-        this.Search.setBounds(100, 160, 300, 30);
+        this.Search.setBounds(120, 160, 300, 30);
         this.Search.setBorder(this.BlackBorder);
         this.Search.setFont(new Font("Serif", Font.BOLD, 20));
 
@@ -424,7 +443,7 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.SearchButton.setBackground(Color.WHITE);
         this.SearchButton.setOpaque(true);
         this.SearchButton.setFocusable(false);
-        this.SearchButton.setBounds(400, 160, 30, 30);
+        this.SearchButton.setBounds(420, 160, 30, 30);
         this.SearchButton.addActionListener(this);
 
         this.FilterLabel_List = new JLabel("FILTER");
@@ -439,9 +458,10 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.FilterLabel_List.add(this.SingerName);
         this.FilterLabel_List.setVisible(false);
 
-        this.SearchPanel_List = new JPanel();
-        this.SearchPanel_List.setPreferredSize(new Dimension(500, 100));
-        this.SearchPanel_List.setBackground(Color.lightGray);
+        this.SearchPanel_List = new JLabel();
+        this.SearchPanel_List.setPreferredSize(new Dimension(525, 100));
+        this.SearchPanel_List.setBackground(Color.black);
+        this.SearchPanel_List.setIcon(new ImageIcon("Gradient.gif"));
         this.SearchPanel_List.setOpaque(true);
         this.SearchPanel_List.setLayout(null);
         this.SearchPanel_List.add(this.SearchText);
@@ -454,15 +474,23 @@ public class InAppFrame extends conmysql implements ActionListener {
 
         this.TablePanel_List = new JPanel();
         this.TablePanel_List.setLayout(null);
-        this.TablePanel_List.setPreferredSize(new Dimension(780, 100));
+        this.TablePanel_List.setBackground(Color.WHITE);
+        this.TablePanel_List.setPreferredSize(new Dimension(755, 100));
         this.TablePanel_List.setOpaque(true);
         this.TablePanel_List.add(this.ScrollListTable);
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
         this.WelcomeLabel_List = new JLabel();
+        this.WelcomeLabel_List.setLayout(null);
         this.WelcomeLabel_List.setText("Welcome " + username);
-        this.WelcomeLabel_List.setFont(new Font("Serif", Font.BOLD, 40));
+        this.WelcomeLabel_List.setFont(new Font("Serif", Font.BOLD, 80));
+        this.WelcomeLabel_List.setVerticalTextPosition(JLabel.CENTER);
+        this.WelcomeLabel_List.setHorizontalTextPosition(JLabel.CENTER);
         this.WelcomeLabel_List.setHorizontalAlignment(JLabel.CENTER);
-        this.WelcomeLabel_List.setIcon(new ImageIcon("notemusic.gif"));
+        this.WelcomeLabel_List.setForeground(Color.WHITE);
+        ImageIcon WelcomeImage = new ImageIcon("motion.gif");
+        this.WelcomeLabel_List.setIcon(WelcomeImage);
         this.WelcomeLabel_List.setBackground(Color.WHITE);
         this.WelcomeLabel_List.setOpaque(true);
 
@@ -472,9 +500,15 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.ListGroup.add(this.TablePanel_List, BorderLayout.EAST);
         this.ListGroup.setVisible(false);
 
-        this.EditPanel_Edit = new JPanel();
+        this.EditPanel_Edit = new JLabel();
         this.EditPanel_Edit.setLayout(null);
         this.EditPanel_Edit.setPreferredSize(new Dimension(350, 250));
+        ImageIcon EditImage = new ImageIcon("linelight.jpg");
+        this.EditImage_1 = EditImage.getImage();
+        this.EditImage_scale = EditImage_1.getScaledInstance((int) width, 250,
+                Image.SCALE_SMOOTH);
+        ImageIcon Edit_Image = new ImageIcon(EditImage_scale);
+        this.EditPanel_Edit.setIcon(Edit_Image);
         this.EditPanel_Edit.setBackground(Color.LIGHT_GRAY);
         this.EditPanel_Edit.setOpaque(true);
         this.EditPanel_Edit.add(this.AddInfo);
@@ -543,8 +577,9 @@ public class InAppFrame extends conmysql implements ActionListener {
 
         this.HistorySignin = new JButton("Sign in history");
         this.HistorySignin.setBounds(0, 190, 500, 40);
-        this.HistorySignin.setBackground(Color.LIGHT_GRAY);
+        this.HistorySignin.setBackground(new Color(0, 0, 0, 0));
         this.HistorySignin.setFocusable(false);
+        this.HistorySignin.setForeground(Color.WHITE);
         this.HistorySignin.setFont(new Font("Serif", Font.BOLD, 25));
         this.HistorySignin.addActionListener(this);
 
@@ -557,7 +592,8 @@ public class InAppFrame extends conmysql implements ActionListener {
 
         this.changeusername = new JButton("Change username");
         this.changeusername.setBounds(0, 230, 500, 40);
-        this.changeusername.setBackground(Color.LIGHT_GRAY);
+        this.changeusername.setBackground(new Color(0, 0, 0, 0));
+        this.changeusername.setForeground(Color.white);
         this.changeusername.setFocusable(false);
         this.changeusername.setFont(new Font("Serif", Font.BOLD, 25));
         this.changeusername.addActionListener(this);
@@ -658,8 +694,9 @@ public class InAppFrame extends conmysql implements ActionListener {
 
         this.changepass = new JButton("Change password");
         this.changepass.setBounds(0, 270, 500, 40);
-        this.changepass.setBackground(Color.LIGHT_GRAY);
+        this.changepass.setBackground(new Color(0, 0, 0, 0));
         this.changepass.setFocusable(false);
+        this.changepass.setForeground(Color.white);
         this.changepass.setFont(new Font("Serif", Font.BOLD, 25));
         this.changepass.addActionListener(this);
 
@@ -782,7 +819,8 @@ public class InAppFrame extends conmysql implements ActionListener {
 
         this.deleteacc = new JButton("Delete account ?");
         this.deleteacc.setBounds(0, 310, 500, 40);
-        this.deleteacc.setBackground(Color.LIGHT_GRAY);
+        this.deleteacc.setBackground(new Color(0, 0, 0, 0));
+        this.deleteacc.setForeground(Color.white);
         this.deleteacc.setFocusable(false);
         this.deleteacc.setFont(new Font("Serif", Font.BOLD, 25));
         this.deleteacc.addActionListener(this);
@@ -860,7 +898,7 @@ public class InAppFrame extends conmysql implements ActionListener {
 
         this.signout = new JButton("Sign out");
         this.signout.setBounds(0, 500, 500, 40);
-        this.signout.setBackground(Color.LIGHT_GRAY);
+        this.signout.setBackground(new Color(0, 0, 0, 0));
         this.signout.setFocusable(false);
         this.signout.setForeground(Color.RED);
         this.signout.setFont(new Font("Serif", Font.BOLD, 25));
@@ -871,12 +909,16 @@ public class InAppFrame extends conmysql implements ActionListener {
         this.text_setting.setFocusable(false);
         this.text_setting.setEditable(false);
         this.text_setting.setFont(new Font("Serif", Font.BOLD, 50));
-        this.text_setting.setBackground(Color.LIGHT_GRAY);
+        this.text_setting.setBackground(new Color(0, 0, 0, 0));
+        this.text_setting.setForeground(Color.WHITE);
 
-        this.SettingPanel_Setting = new JPanel();
+        this.SettingPanel_Setting = new JLabel();
         this.SettingPanel_Setting.setLayout(null);
+        ImageIcon setting = new ImageIcon("gif.gif");
+        this.SettingPanel_Setting.setIcon(setting);
         this.SettingPanel_Setting.setPreferredSize(new Dimension(500, 500));
         this.SettingPanel_Setting.setBackground(Color.LIGHT_GRAY);
+        this.SettingPanel_Setting.setOpaque(true);
         this.SettingPanel_Setting.add(this.HistorySignin);
         this.SettingPanel_Setting.add(this.changeusername);
         this.SettingPanel_Setting.add(this.changepass);
@@ -1101,8 +1143,8 @@ public class InAppFrame extends conmysql implements ActionListener {
             this.FilterLabel_List.setVisible(false);
             this.ApplyButton.setVisible(false);
             this.DeleteButton.setVisible(false);
-            this.Search.setBounds(100, 160, 300, 30);
-            this.SearchButton.setBounds(400, 160, 30, 30);
+            this.Search.setBounds(120, 160, 300, 30);
+            this.SearchButton.setBounds(420, 160, 30, 30);
         } else {
 
         }
