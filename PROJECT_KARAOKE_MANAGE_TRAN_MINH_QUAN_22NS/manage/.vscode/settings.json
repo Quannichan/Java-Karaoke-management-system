@@ -1,0 +1,15 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "c:\\Users\\Quân\\javamail\\javax.mail-1.6.2.jar",
+            "c:\\Users\\Quân\\javamail\\jaf-1_0_2-upd2\\jaf-1.0.2\\activation.jar",
+            "c:\\Users\\Quân\\MySqlJdbcDriver\\mysql-connector-j-8.0.31.jar"
+        ],
+        "exclude": [
+            "lib/testng-7.6.1.jar",
+            "lib/slf4j-api-2.0.6.jar"
+        ]
+    },
+    "prettier.enableDebugLogs": true
+}
